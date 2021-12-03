@@ -1,6 +1,8 @@
 import { NextApiRequest, NextApiResponse } from "next"
 import { Readable } from "stream"
 import Stripe from "stripe"
+import { query as q } from "faunadb";
+import { fauna } from "../../services/fauna"
 import { stripe } from "../../services/stripe"
 import { saveSubscription } from "./_lib/manageSubscription"
 
@@ -37,7 +39,17 @@ const webhooks = async (req: NextApiRequest, res: NextApiResponse) => {
     try {
       event = stripe.webhooks.constructEvent(buf, secret, process.env.STRIPE_WEBHOOK_SECRET)
     } catch (err) {
-
+      await fauna.query(
+        q.Create(
+          q.Collection('failedConstruct'),
+          {
+            data: {
+              secret,
+              env: process.env.STRIPE_WEBHOOK_SECRET
+            }
+          }
+        )
+      )
       return res.status(400).send(`Webhook error: ${err.message}`)
     }
 
