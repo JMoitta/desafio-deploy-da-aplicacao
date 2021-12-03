@@ -24,7 +24,7 @@ export default function Posts({ posts }: PostsProps) {
 
   const urlPath = useCallback(
     (slug: string) => {
-      return session ? `/posts/${slug}` : `/posts/preview/${slug}`
+      return session?.activeSubscription ? `/posts/${slug}` : `/posts/preview/${slug}`
     }, [session]);
 
   return (
