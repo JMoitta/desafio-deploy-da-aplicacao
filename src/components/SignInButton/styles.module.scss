@@ -31,3 +31,15 @@
     filter: brightness(0.8);
   }
 }
+
+@media only screen and (max-width: 640px) {
+  .signInButtonText {
+    display: none;
+  }
+
+  .signInButton {
+    svg:first-child {
+      margin-right: 0;
+    }
+  }
+}

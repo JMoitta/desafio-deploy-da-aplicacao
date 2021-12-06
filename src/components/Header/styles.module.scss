@@ -56,3 +56,21 @@
     margin-left: auto;
   }
 }
+
+@media only screen and (max-width: 640px) {
+  .headerImage {
+    width: 100px;
+  }
+
+  .headerContent {
+    nav {
+      margin-left: 1rem;
+
+      a {
+        & + a {
+          margin-left: 1rem;
+        }
+      }
+    }
+  }
+}
