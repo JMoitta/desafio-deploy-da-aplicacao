@@ -8,6 +8,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  gap: 1rem;
 
   color: var(--white);
   font-weight: bold;
@@ -17,13 +18,9 @@
     height: 20px;
   }
 
-  svg:first-child {
-    margin-right: 1rem;
-  }
-
-  svg.closeIcon {
-    margin-left: 1rem;
-  }
+  // svg:first-child {
+  //   margin-right: 1rem;
+  // }
 
   transition: filter 0.2s;
 
@@ -35,11 +32,5 @@
 @media only screen and (max-width: 640px) {
   .signInButtonText {
     display: none;
-  }
-
-  .signInButton {
-    svg:first-child {
-      margin-right: 0;
-    }
   }
 }

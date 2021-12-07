@@ -1,4 +1,4 @@
-import { FaGithub } from 'react-icons/fa'
+import { FaSignOutAlt, FaSignInAlt } from 'react-icons/fa'
 import { FiX } from 'react-icons/fi'
 import { signIn, signOut, useSession } from 'next-auth/client'
 
@@ -13,11 +13,11 @@ export function SignInButton() {
       type="button"
       onClick={() => signOut()}
     >
-      <FaGithub color="#04d361" />
-      <span className={styles.signInButtonText}>
+      <span >
         {session.user.name}
       </span>
-      <FiX color="#737380" className={styles.closeIcon} />
+      <FaSignOutAlt color="#737380" />
+      {/* <FiX color="#737380" className={styles.closeIcon} /> */}
     </button>
   ) : (
     <button
@@ -25,9 +25,9 @@ export function SignInButton() {
       type="button"
       onClick={() => signIn('github')}
     >
-      <FaGithub color="#eba417" />
-      <span className={styles.signInButtonText}>
-        Sign in with Github
+      <FaSignInAlt color="#04d361" /> {/** color="#eba417" */}
+      <span>
+        Sign in
       </span>
     </button>
   )
