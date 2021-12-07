@@ -5,6 +5,10 @@ import { query as q } from "faunadb";
 import { fauna } from "../../services/fauna"
 import { stripe } from "../../services/stripe"
 import { saveSubscription } from "./_lib/manageSubscription"
+import Cors from 'micro-cors'
+const cors = Cors({
+  allowMethods: ['POST', 'HEAD']
+})
 
 async function buffer(readable: Readable) {
   const chunks = []
@@ -36,7 +40,7 @@ const webhooks = async (req: NextApiRequest, res: NextApiResponse) => {
 
     let event: Stripe.Event
     try {
-      event = stripe.webhooks.constructEvent(buf.toString(), secret, process.env.STRIPE_WEBHOOK_SECRET)
+      event = stripe.webhooks.constructEvent(buf, secret, process.env.STRIPE_WEBHOOK_SECRET)
     } catch (err) {
       await fauna.query(
         q.Create(
@@ -95,4 +99,4 @@ const webhooks = async (req: NextApiRequest, res: NextApiResponse) => {
   }
 }
 
-export default webhooks
+export default cors(webhooks as any)
