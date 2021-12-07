@@ -36,7 +36,7 @@ const webhooks = async (req: NextApiRequest, res: NextApiResponse) => {
 
     let event: Stripe.Event
     try {
-      event = stripe.webhooks.constructEvent(buf, secret, process.env.STRIPE_WEBHOOK_SECRET)
+      event = stripe.webhooks.constructEvent(buf.toString(), secret, process.env.STRIPE_WEBHOOK_SECRET)
     } catch (err) {
       await fauna.query(
         q.Create(
@@ -44,6 +44,7 @@ const webhooks = async (req: NextApiRequest, res: NextApiResponse) => {
           {
             data: {
               secret,
+              buf,
               headers: req.headers,
               env: process.env.STRIPE_WEBHOOK_SECRET
             }
